@@ -128,4 +128,43 @@ function chest(){
 }
 
 //basement
-function basement
+function basement(){
+    changeImage("basement.jpg")
+    setText(
+        "The basement is cold and dark",
+        "You hear loud scary noises",
+        "You have 2 paths ahead!"
+    )
+    makeChoices([
+        {text:"Storage Room",next:storage},
+        {text:"Secret Tunnel",next:tunnel}
+
+    ])
+}
+//storage(
+function storage(){
+    addItem("Code 666")
+    changeImage("storage.jpg")
+    setText(
+        "Empty room with tables", 
+        "You find a paper with number 666",
+        "Hint: It might open something"
+    )
+    makeChoices([
+        {text:"Explore",next:exploreStorage},
+        {text:"Leave house",next:escapeEnding}
+    ])
+}
+//explore storage
+function exploreStorage(){
+    changeImage("storage.jpg")
+    setText(
+        "You hear loud stomps.",
+        "You should leave quickly.",
+        "Where next?"
+    )
+    makeChoices([
+        {text:"Go to Tunnel",next:tunnel},
+        {text:"Go to Hallway",next:hallway}
+    ])
+}
