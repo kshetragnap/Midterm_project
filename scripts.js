@@ -8,7 +8,7 @@ const codeBox=document.getElementById("codeBox");
 const codeInput=document.getElementById("codeInput");
 const unlockBtn=document.getElementById("unlockBtn");
 const inventoryDiv=document.getElementById("inventory");
-// state varuables
+// state variables
 
 let inventory=[]
 
@@ -31,9 +31,10 @@ function setText(a,b,c){
 //function to create choice buttons
 function makeChoices(options){
     choices.innerHTML=""
+    codeBox.style.display="none"
     options.forEach(option=>{
         let btn=document.createElement("button")
-        btn.textContent=options.textContent
+        btn.textContent=option.text
         btn.addEventListener("click",option.next)
         choices.appendChild(btn)
     })
@@ -52,13 +53,13 @@ function welcome(){
     changeImage("house.jpg")
 
     setText(
-        "Welcome to the haunted house adventure!!!"
-        "Choose your next step"
+        "Welcome to the haunted house adventure!!!",
+        "Choose your next step",
         "Hallway or Basement"
     )
     makeChoices([
-        {text:"Go to Hallway", next.hallway},
-        {text:"Go to Basement" next:basement}
+        {text:"Go to Hallway", next:hallway},
+        {text:"Go to Basement", next:basement}
     ])
 }
 //hallway
@@ -91,7 +92,7 @@ function redRoom(){
 //closet
 function closet() {
     addItem("Bloody Key")
-    changeImage("closet.jpg")
+    changeImage("closet.png")
     setText(
         "Blood flows from the closet.",
         "The blood is all over your feet",
@@ -168,3 +169,115 @@ function exploreStorage(){
         {text:"Go to Hallway",next:hallway}
     ])
 }
+//tunnel
+function tunnel(){
+    changeImage("tunnel.jpg")
+    setText(
+        "A pitch black tunnel",
+        "You see a monster!!!", 
+        "RUN!!! or explore"
+    )
+    makeChoices([
+        {text:"Explore tunnel",next:deathEnding},
+        {text:"Leave house",next:escapeEnding}
+    ])
+}
+
+//first ending
+function deathEnding(){
+    changeImage("monster.jpg")
+    setText(
+        "The monster ATTACKS you!!",
+        "You didn't escape :(",
+        "Ending: death"
+    )
+    makeChoices([
+        {text:"Restart",next:welcome}
+    ])
+}
+//second ending
+function escapeEnding(){
+    changeImage("escape.jpg")
+    setText(
+        "You escaped the haunted house. YAY!!",
+        "You survived :)",
+        "Ending: escape"
+    )
+    makeChoices([
+        {text:"Restart",next:welcome}
+    ])
+}
+//third ending
+function treasureEnding(){
+    changeImage("treasure.jpg")
+    setText(
+        "The chest opens",
+        "YOU FOUND A HIDDEN TREASURE!!!",
+        "Secret Ending"
+    )
+    makeChoices([
+        {text:"Restart",next:welcome}
+    ])
+}
+//user input
+unlockBtn.addEventListener("click",()=>{
+    if(codeInput.value==="666"){
+        treasureEnding()
+    }else{
+        p3.textContent="Wrong code."
+    }
+})
+
+//hover events
+img.addEventListener("mouseover",()=>{
+    img.style.filter="brightness(1.3)"
+})
+
+img.addEventListener("mouseout",()=>{
+    img.style.filter="brightness(1)"
+})
+
+//keyboard events
+document.addEventListener("keydown",(e)=>{
+    if(e.key==="h") hallway()
+    if(e.key==="b") basement()
+})
+
+//event listeners
+document.addEventListener("keydown",(e)=>{
+    if(e.key==="r") welcome()
+})
+
+document.addEventListener("keydown",(e)=>{
+    if(e.key==="i") alert("Inventory: " + inventory.join(", "))
+})
+
+document.addEventListener("keydown",(e)=>{
+    if(e.key==="h") hallway()
+})
+document.addEventListener("keydown",(e)=>{
+    if(e.key==="b") basement()
+})
+document.addEventListener("keydown",(e)=>{
+    if(e.key==="d") dolls()
+})
+document.addEventListener("keydown",(e)=>{
+    if(e.key==="c") chest()
+})
+document.addEventListener("keydown",(e)=>{
+    if(e.key==="t") tunnel()
+})
+document.addEventListener("keydown",(e)=>{
+    if(e.key==="s") storage()
+})
+document.addEventListener("keydown",(e)=>{
+    if(e.key==="e") escapeEnding()
+})
+document.addEventListener("keydown",(e)=>{
+    if(e.key==="x") deathEnding()
+})
+document.addEventListener("keydown",(e)=>{
+    if(e.key==="w") welcome()
+})
+//start game!!
+welcome()
